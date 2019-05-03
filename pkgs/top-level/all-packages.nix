@@ -6660,9 +6660,13 @@ in
 
   abcl = callPackage ../development/compilers/abcl {};
 
+  adoptopenjdk-bin-10-packages-linux = import ../development/compilers/adoptopenjdk-bin/jdk10-linux.nix;
   adoptopenjdk-bin-11-packages-linux = import ../development/compilers/adoptopenjdk-bin/jdk11-linux.nix;
   adoptopenjdk-bin-11-packages-darwin = import ../development/compilers/adoptopenjdk-bin/jdk11-darwin.nix;
 
+  adoptopenjdk-hotspot-bin-10 = if stdenv.isLinux
+    then callPackage adoptopenjdk-bin-10-packages-linux.jdk-hotspot {}
+    else callPackage adoptopenjdk-bin-10-packages-darwin.jdk-hotspot {};
   adoptopenjdk-hotspot-bin-11 = if stdenv.isLinux
     then callPackage adoptopenjdk-bin-11-packages-linux.jdk-hotspot {}
     else callPackage adoptopenjdk-bin-11-packages-darwin.jdk-hotspot {};
@@ -7244,6 +7248,11 @@ in
         inherit (gnome2) GConf gnome_vfs;
       };
 
+  openjdk10 =
+    if stdenv.isDarwin then
+      callPackage ../development/compilers/openjdk/darwin/10.nix { }
+    else
+      adoptopenjdk-hotspot-bin-10;
   openjdk11 =
     if stdenv.isDarwin then
       callPackage ../development/compilers/openjdk/darwin/11.nix { }
@@ -7268,7 +7277,15 @@ in
         (lib.addMetaAttrs { outputsToInstall = [ "jre" ]; }
           ((openjdk8.override { minimal = true; }).jre // { outputs = [ "jre" ]; }));
 
+  jdk10 = openjdk10 // { outputs = [ "out" ]; };
   jdk11 = openjdk11 // { outputs = [ "out" ]; };
+  jdk10_headless =
+    if stdenv.isDarwin then
+      jdk10
+    else
+      lib.setName "openjdk-${lib.getVersion pkgs.openjdk10}-headless"
+        (lib.addMetaAttrs {}
+          ((openjdk10.override { }) // {}));
   jdk11_headless =
     if stdenv.isDarwin then
       jdk11
@@ -8963,7 +8980,9 @@ in
   massif-visualizer = libsForQt5.callPackage ../development/tools/analysis/massif-visualizer { };
 
   maven = maven3;
-  maven3 = callPackage ../development/tools/build-managers/apache-maven { };
+  maven3 = callPackage ../development/tools/build-managers/apache-maven {
+    jdk = jdk10;
+   };
 
   go-md2man = callPackage ../development/tools/misc/md2man {};
 

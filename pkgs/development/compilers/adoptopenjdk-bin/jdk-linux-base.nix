@@ -74,7 +74,7 @@ let result = stdenv.mkDerivation rec {
 
     # Remove embedded freetype to avoid problems like
     # https://github.com/NixOS/nixpkgs/issues/57733
-    rm $out/lib/libfreetype.so
+    rm -f $out/lib/libfreetype.so
 
     # for backward compatibility
     ln -s $out $out/jre

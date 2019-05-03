@@ -1,11 +1,27 @@
 {
+  "openjdk10": {
+    "linux": {
+      "jdk": {
+        "hotspot": {
+          "packageType": "jdk",
+          "vmType": "hotspot",
+          "x86_64": {
+            "build": "13",
+            "sha256": "f8caa2e8c28370e3b8e455686e1ddeb74656f068848f8c355d9d8d1c225528f4",
+            "url": "https://github.com/AdoptOpenJDK/openjdk10-releases/releases/download/jdk-10.0.2%2B13/OpenJDK10_x64_Linux_jdk-10.0.2+13.tar.gz",
+            "version": "10.0.2"
+          }
+        }
+      }
+    }
+  },
   "openjdk11": {
     "linux": {
       "jdk": {
         "hotspot": {
           "aarch64": {
             "build": "7",
-            "sha256": "ac367f3261fb53508c07f7eeb767b11ab53681b7613b81b6b7030c4db00b1aa8",
+            "sha256": "894a846600ddb0df474350037a2fb43e3343dc3606809a20c65e750580d8f2b9",
             "url": "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.3%2B7/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.3_7.tar.gz",
             "version": "11.0.3"
           },
@@ -33,7 +49,7 @@
         "hotspot": {
           "aarch64": {
             "build": "7",
-            "sha256": "4af5b7d6678d03f2207029a7c610d81b1f016462c1dfcd8153a227b1df973a42",
+            "sha256": "de31fab70640c6d5099de5fc8fa8b4d6b484a7352fa48a9fafbdc088ca708564",
             "url": "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.3%2B7/OpenJDK11U-jre_aarch64_linux_hotspot_11.0.3_7.tar.gz",
             "version": "11.0.3"
           },
